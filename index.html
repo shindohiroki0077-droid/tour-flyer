@@ -7,32 +7,66 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        @page {
-            size: A4;
-            margin: 0;
-        }
+   <style>
+  /* ===== A4固定：ここが本体 ===== */
+  @page {
+    size: A4;
+    margin: 0;
+  }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #eee; /* 画面でA4が見やすいように */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+  }
 
-        body {
-            font-family: 'Montserrat', sans-serif;
-            width: 210mm;
-            height: 297mm;
-            background: #fafafa;
-            color: #1a1a1a;
-        }
+  /* A4用紙の“枠” */
+  .a4-sheet {
+    width: 210mm;
+    height: 297mm;
+    background: #fff;
+    margin: 0 auto;
+    overflow: hidden; /* はみ出しを強制カット */
+    position: relative;
+  }
 
-        .flyer {
-            width: 100%;
-            height: 100%;
-            display: grid;
-            grid-template-rows: 1fr auto 1fr;
-        }
+  /* 中身の余白（好きに調整） */
+  .a4-inner {
+    padding: 12mm; /* ←余白。10〜14mmで調整 */
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  /* 画面表示時は影を付けてA4っぽく見せる（印刷には出ない） */
+  @media screen {
+    .a4-sheet {
+      margin: 16px auto;
+      box-shadow: 0 10px 30px rgba(0,0,0,.15);
+    }
+  }
+
+  /* 印刷時：背景や余白を完全にA4に合わせる */
+  @media print {
+    html, body {
+      background: #fff;
+    }
+    .a4-sheet {
+      margin: 0;
+      box-shadow: none;
+    }
+  }
+
+  /* 画像が原因で崩れるのを防ぐ保険 */
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+</style>
+
 
         /* ========================================
            BLOCK 1: HERO SECTION
@@ -406,6 +440,8 @@
 </style>
 </head>
 <body>
+     <div class="a4-sheet">
+    <div class="a4-inner">
     <div class="flyer">
         <!-- ========================================
              BLOCK 1: HERO SECTION
@@ -551,5 +587,7 @@
             </div>
         </section>
     </div>
+          </div>
+  </div>
 </body>
 </html>
