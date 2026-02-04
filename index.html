@@ -8,64 +8,56 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
    <style>
-  /* ===== A4固定：ここが本体 ===== */
-  @page {
-    size: A4;
-    margin: 0;
-  }
+  /* ===== A4印刷用（画面は崩さない）===== */
+  @page { size: A4; margin: 0; }
 
   html, body {
     margin: 0;
     padding: 0;
-    background: #eee; /* 画面でA4が見やすいように */
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+    background: #eee; /* 画面で見やすく */
   }
 
-  /* A4用紙の“枠” */
+  /* 画面では“普通のページ”として表示（A4固定しない） */
   .a4-sheet {
-    width: 210mm;
-    height: 297mm;
+    width: min(980px, 100%);
+    margin: 16px auto;
     background: #fff;
-    margin: 0 auto;
-    overflow: hidden; /* はみ出しを強制カット */
-    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,.15);
   }
 
-  /* 中身の余白（好きに調整） */
   .a4-inner {
-    padding: 12mm; /* ←余白。10〜14mmで調整 */
-    height: 100%;
+    padding: 24px; /* 画面用余白 */
     box-sizing: border-box;
   }
 
-  /* 画面表示時は影を付けてA4っぽく見せる（印刷には出ない） */
-  @media screen {
-    .a4-sheet {
-      margin: 16px auto;
-      box-shadow: 0 10px 30px rgba(0,0,0,.15);
-    }
-  }
-
-  /* 印刷時：背景や余白を完全にA4に合わせる */
+  /* 印刷のときだけA4に固定する */
   @media print {
-    html, body {
-      background: #fff;
-    }
+    html, body { background: #fff; }
+
     .a4-sheet {
+      width: 210mm;
+      height: 297mm;
       margin: 0;
       box-shadow: none;
+      overflow: hidden; /* 印刷でだけカット */
+    }
+
+    .a4-inner {
+      padding: 12mm; /* 印刷用余白 */
+      height: 100%;
     }
   }
 
-  /* 画像が原因で崩れるのを防ぐ保険 */
   img {
     max-width: 100%;
     height: auto;
     display: block;
   }
 </style>
+
 
 
         /* ========================================
